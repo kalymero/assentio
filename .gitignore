@@ -1,0 +1,11 @@
+*.py[co]
+*.sw[op]
+*.egg*
+parts/
+eggs/
+develop-eggs/
+bin/
+extra/
+build/
+.installed.cfg
+.mr.developer.cfg

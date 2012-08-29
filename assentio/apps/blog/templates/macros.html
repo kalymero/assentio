@@ -1,0 +1,69 @@
+{% macro post_header_metadata(id, date, state) %}
+ <p class="post-metadata">
+    <small>Posted on<strong> {{date|datetimeformat}}</strong></small>
+    {% if state == 'private' %}
+        - <small class="private">private</small>
+    {% endif %}
+    {% if g.user.is_authenticated() %}
+        - <a href="{{ url_for('postview.edit_view') }}?id={{id}}" target="_blank"><i class="icon-edit"></i></a>
+    {% endif %}
+ </p>
+{% endmacro %}
+
+{% macro post_footer_metadata() %}
+<p class="disabled_feature post-metadata footer-metadata">
+    <small>Posted in <strong>tagname</strong> | Tagged <strong>category</strong> | <strong>X Replies</strong></small>
+</p>
+{% endmacro %}
+
+
+<!-- The standard post -->
+{% macro standard_post(post, full=False) %}
+<article id="post-{{post.id}}">
+    <span class="badge pull-right">post</span>
+    {% if post.image %}
+        <img src="{{ post.image }}" />
+    {% endif %}
+    <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
+    {{ post_header_metadata(post.id, post.date, post.state) }}
+    <p><strong>{{ post.description }}</strong></p>
+    {% if full or post.showfull %}
+        <p>{{post.body|safe}}</p>
+    {% else %}
+        <a href="{{ url_for('blog.post', post_id=post.id) }}">Continue reading &rarr;</a>
+    {% endif %}
+    {{ post_footer_metadata() }}
+</article>
+{% endmacro %}
+
+<!-- The quote post -->
+{% macro quote_post(post) %}
+<article id="post-{{ post.id }}">
+    <span class="badge pull-right">quote</span>
+    <blockquote><h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3></blockquote>
+    <p>{{ post.description }}</p>
+    {{ post_header_metadata(post.id, post.date, post.state) }}
+    {{ post_footer_metadata() }}
+</article>
+{% endmacro %}
+
+<!-- The image post -->
+{% macro image_post(post) %}
+<article id="post-{{ post.id }}">
+    <span class="badge pull-right">image</span>
+    <a href="{{ post.image }}"><img class="img-polaroid" src="{{ post.image }}"/></a>
+    <p>{{ post.description }}</p>
+    {{ post_header_metadata(post.id, post.date, post.state) }}
+    {{ post_footer_metadata() }}
+</article>
+{% endmacro %}
+
+<!-- The flashnews post -->
+{% macro flashnews_post(post) %}
+<article id="post-{{ post.id }}">
+    <span class="badge pull-right">flash news</span>
+    <div class="well">{{ post.body|safe }}</div>
+    {{ post_header_metadata(post.id, post.date, post.state) }}
+    {{ post_footer_metadata() }}
+</article>
+{% endmacro %}

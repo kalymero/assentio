@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form id="login-form" class="form-horizontal" method="POST" action="." >
+    {{ form.hidden_tag() }}
+    <legend>Log In</legend> 
+        <div class="control-group">
+              <label class="control-label" for="{{ form.username.name }}"> {{ form.username.label }}</label>
+              <div class="controls">
+                  <input id="{{ form.username.name }}" name="{{ form.username.name }}" type="text" placeholder="username" class="input-xlarge">
+                  <p class="help-block"></p>
+              </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="{{ form.password.name }}">{{ form.password.label }}</label>
+            <div class="controls">
+                <input type="password" id="{{ form.password.name }}" name="{{ form.password.name }}" type="text" placeholder="password" class="input-xlarge">
+                <p class="help-block"></p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn btn-success">Ok</button>
+            </div>
+        </div>
+</form>
+
+{% endblock %}

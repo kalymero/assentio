@@ -1,0 +1,39 @@
+{% import "macros.html" as macros with context %}
+{% extends "base.html" %}
+
+{% block content -%}
+<!-- HomePage -->
+
+{% for post in posts.items -%}
+
+    {% if post.type == 'standard' %}
+        {{ macros.standard_post(post, full=False) }}
+
+    {% elif post.type == 'quote' %}
+        {{ macros.quote_post(post) }}
+
+    {% elif post.type == 'image' %}
+        {{ macros.image_post(post) }}
+
+    {% elif post.type == 'flashnews' %}
+        {{ macros.flashnews_post(post) }}
+
+    {% endif %}
+
+{%- endfor %}
+
+<ul class="pager">
+     {% if posts.has_next %}
+         <li class="previous">
+             <a href="{{ url_for('common.index', page=posts.next_num) }}">&larr; Older</a>
+         </li>
+     {% endif %}
+
+     {% if posts.has_prev %}
+         <li class="next">
+            <a href="{{ url_for('common.index', page=posts.prev_num) }}">Newer &rarr;</a>
+         </li>
+     {% endif %}
+</ul> 
+
+{%- endblock %}

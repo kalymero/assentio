@@ -1,0 +1,112 @@
+body {
+    background: #E2E2E2;
+    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 25px;
+}
+
+article, #login-form {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+article h3{
+    margin-bottom: 0px;
+}
+
+article .post-metadata strong {
+    color: #1982D1;
+}
+
+article .post-metadata strong:hover {
+    text-decoration: underline;
+}
+
+article .footer-metadata{
+    margin-top: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #ccc;
+}
+
+article [class^="icon-"], [class*=" icon-"] {
+    margin-top: 0px;
+}
+
+article h3 a {
+    color: #333;
+}
+
+article a:hover {
+    color: #1982D1;
+}
+
+article a img {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+article > img{
+    margin-right: 10px;
+    height: 70px;
+    float: left;
+}
+
+.private {
+    color: red !important;
+}
+
+.disabled_feature{
+    color: #ccc;
+}
+
+.disabled_feature strong{
+    color: #ccc !important;
+}
+
+#wrapper {
+    margin-top: 30px;
+}
+
+#banner {
+    background: url(/static/img/wallpaper.jpg) 0px -222px;
+    height: 288px;
+}
+
+.navbar{
+    margin-bottom: 0px;
+}
+
+#main-content {
+    background: #FAFAFA;
+}
+
+li.previous a {
+    margin-left: 20px;
+}
+
+#social-buttons{
+    margin: 20px;
+}
+
+.portlet {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.portlet h6 {
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.portlet p {
+    
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 19px;
+    line-height: 18px;
+    letter-spacing: 1px;
+}
+

@@ -1,0 +1,48 @@
+{% macro show_pages(category, with_home=False) %}
+
+{% if with_home %}
+    <li id="home"><a href="/">Home</a></li>
+{% endif %}
+
+{% for page in pages if page.category==category %}
+<li>
+    {% if page.post.state == 'public' %}
+        <a href="{{ url_for('blog.post', post_id=page.post.id) }}">{{ page.post.title }}</a>
+    {% else %}
+        <a class="private" href="{{ url_for('blog.post', post_id=page.post.id) }}">{{ page.post.title }}</a>
+    {% endif %}
+</li>
+{% endfor %}
+
+{% endmacro %}
+                                    
+{% macro social_buttons(btns) %}
+<div id="social-buttons">
+    {% for btn in btns %}
+        {% if not btn.disabled %}
+        <a href="{{ btn.url }}" target="_blank"><img src="{{ btn.image }}" alt="{{ btn.name }}" /></a>
+        {% else %}
+        <!-- DISABLED --><img class="disabled_feature" src="{{ btn.image }}" alt="{{ btn.name }}" />
+        {% endif %}
+    {% endfor %}
+
+</div>
+{% endmacro %}
+
+
+{% macro portlet_textportlet(portlet)  %}
+<div class="portlet">
+    <h6>{{ portlet.title }}</h6>
+    <p>{{ portlet.body|safe }}<p>
+</div>
+{% endmacro %}
+
+
+{% macro show_portlets(slot) %}
+    {% for portlet in get_portlet_by_slot(slot, ordered=True) %}
+        {% if portlet.type == 'textportlet' %}
+            {{ portlet_textportlet(portlet) }}
+        {% endif %}
+    {% endfor %}
+
+{% endmacro %}
