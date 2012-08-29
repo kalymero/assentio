@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.declarative import declared_attr
 
@@ -5,6 +7,8 @@ from assentio import db
 from assentio.utils import DBMixin, classproperty
 
 from .slots import PortletSlot
+
+template_folder = os.path.join(os.path.split(__file__)[0], 'templates')
 
 
 class BasePortlet(DBMixin):
@@ -45,3 +49,7 @@ class BasePortlet(DBMixin):
 
     def __repr__(self):
         return '<%s "%s">' % (self.type, self.title)
+
+    def get_template(self):
+        "Must return the rendered template portlet"
+        raise NotImplementedError

@@ -283,6 +283,10 @@ class BlogComponentTestCase(base.BaseTestCase):
         # check the type is in the extension registry
         self.assertIn(test_portlet_2.type, self.app.extensions['blog_portlets'])
 
+        # check get_template raise a NotImplementedError
+        with self.assertRaises(NotImplementedError):
+            test_portlet_2.get_template()
+
     def test_slots(self):
         "Check slots working"
         

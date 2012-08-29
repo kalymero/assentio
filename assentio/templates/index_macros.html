@@ -29,20 +29,9 @@
 </div>
 {% endmacro %}
 
-
-{% macro portlet_textportlet(portlet)  %}
-<div class="portlet">
-    <h6>{{ portlet.title }}</h6>
-    <p>{{ portlet.body|safe }}<p>
-</div>
-{% endmacro %}
-
-
 {% macro show_portlets(slot) %}
     {% for portlet in get_portlet_by_slot(slot, ordered=True) %}
-        {% if portlet.type == 'textportlet' %}
-            {{ portlet_textportlet(portlet) }}
-        {% endif %}
+        {{ portlet.get_template()|safe }}
     {% endfor %}
 
 {% endmacro %}
