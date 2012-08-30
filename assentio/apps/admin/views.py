@@ -2,11 +2,11 @@ from datetime import datetime
 
 from wtforms import fields as f, widgets as w
 
-from wtforms.ext.sqlalchemy.orm import model_form, converts
+from wtforms.ext.sqlalchemy.orm import converts
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from flask.ext.admin import expose, AdminIndexView
-from flask.ext.admin.form import BaseForm, ChosenSelectWidget
+from flask.ext.admin.form import ChosenSelectWidget
 from flask.ext.admin.contrib.sqlamodel import ModelView
 from flask.ext.admin.contrib.sqlamodel.form import AdminModelConverter
 from flask.ext.login import current_user, login_required
@@ -21,32 +21,18 @@ class MyIndexView(AdminIndexView):
     def index(self):
         return self.render('admin/index.html')
 
-# This sublassing is required in order to WTForms handle correctly the new
-# Encrypted field
+
+# Adding coverter for the new Encrypted field
+@converts('Encrypted')
+def conv_Encrypted(self, field_args, **extra):
+    field_args['widget'] = w.PasswordInput()
+    self._string_common(field_args=field_args, **extra)
+    return f.TextField(**field_args)
+
+AdminModelConverter.conv_Encrypted = conv_Encrypted
 
 
-class ExtendedAdminModelConverter(AdminModelConverter):
-
-    @converts('Encrypted')
-    def conv_Encrypted(self, field_args, **extra):
-        field_args['widget'] = w.PasswordInput()
-        self._string_common(field_args=field_args, **extra)
-        return f.TextField(**field_args)
-
-
-class ExtendedModelView(ModelView):
-    def scaffold_form(self):
-        return model_form(self.model,
-                          BaseForm,
-                          only=self.form_columns,
-                          exclude=self.excluded_form_columns,
-                          field_args=self.form_args,
-                          converter=ExtendedAdminModelConverter(self))
-
-# ---
-
-
-class UnaccessibleModelView(ExtendedModelView):
+class UnaccessibleModelView(ModelView):
     # Receive a 403 FORBIDDEN if not authenticated
     def is_accessible(self):
         return current_user.is_authenticated()
