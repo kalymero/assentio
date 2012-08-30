@@ -16,21 +16,28 @@
 </p>
 {% endmacro %}
 
+{% macro post_badge(type) %}
+<span class="badge badge-info pull-right hidden-phone">{{ type }}</span>
+{% endmacro %}
 
 <!-- The standard post -->
 {% macro standard_post(post, full=False) %}
 <article id="post-{{post.id}}">
-    <span class="badge pull-right">post</span>
+    {{ post_badge('post') }}
     {% if post.image %}
-        <img src="{{ post.image }}" />
+    <img class="hidden-phone" src="{{ post.image }}" />
     {% endif %}
     <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
     {{ post_header_metadata(post.id, post.date, post.state) }}
-    <p><strong>{{ post.description }}</strong></p>
-    {% if full or post.showfull %}
-        <p>{{post.body|safe}}</p>
+    <p class="post-description"><strong>{{ post.description }}</strong></p>
+    {% if full %}
+        {{post.body|safe}}
     {% else %}
-        <a href="{{ url_for('blog.post', post_id=post.id) }}">Continue reading &rarr;</a>
+        {% if post.showfull %}
+            <div class="hidden-phone">{{post.body|safe}}</div>
+        {% else %}
+            <a href="{{ url_for('blog.post', post_id=post.id) }}">Continue reading &rarr;</a>
+        {% endif%}
     {% endif %}
     {{ post_footer_metadata() }}
 </article>
@@ -39,7 +46,7 @@
 <!-- The quote post -->
 {% macro quote_post(post) %}
 <article id="post-{{ post.id }}">
-    <span class="badge pull-right">quote</span>
+    {{ post_badge('quote') }}
     <blockquote><h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3></blockquote>
     <p>{{ post.description }}</p>
     {{ post_header_metadata(post.id, post.date, post.state) }}
@@ -50,7 +57,7 @@
 <!-- The image post -->
 {% macro image_post(post) %}
 <article id="post-{{ post.id }}">
-    <span class="badge pull-right">image</span>
+    {{ post_badge('image') }}
     <a href="{{ post.image }}"><img class="img-polaroid" src="{{ post.image }}"/></a>
     <p>{{ post.description }}</p>
     {{ post_header_metadata(post.id, post.date, post.state) }}
@@ -61,7 +68,7 @@
 <!-- The flashnews post -->
 {% macro flashnews_post(post) %}
 <article id="post-{{ post.id }}">
-    <span class="badge pull-right">flash news</span>
+    {{ post_badge('flash news') }}
     <div class="well">{{ post.body|safe }}</div>
     {{ post_header_metadata(post.id, post.date, post.state) }}
     {{ post_footer_metadata() }}

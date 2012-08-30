@@ -4,6 +4,11 @@ body {
     line-height: 25px;
 }
 
+.post-description {
+    clear: both;
+    margin-bottom: 20px;
+}
+
 article, #login-form {
     margin-top: 50px;
     margin-left: 50px;
@@ -12,7 +17,9 @@ article, #login-form {
 
 article h3{
     margin-bottom: 0px;
+    line-height: 25px;
 }
+
 
 article .post-metadata strong {
     color: #1982D1;
@@ -68,8 +75,12 @@ article > img{
 }
 
 #banner {
-    background: url(/static/img/wallpaper.jpg) 0px -222px;
+    background: url(/static/img/wallpaper.png) center -235px;
     height: 288px;
+}
+
+#banner-mobile {
+    text-align: center;
 }
 
 .navbar{
