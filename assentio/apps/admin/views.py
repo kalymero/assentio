@@ -78,7 +78,3 @@ class PortletView(UnaccessibleModelView):
                      order=dict(default=1),
                      state=dict(choices=states.items(), default='private'))
     list_columns = ('type', 'title', 'slot', 'order', 'state')
-
-
-class PortletSlotView(UnaccessibleModelView):
-    pass

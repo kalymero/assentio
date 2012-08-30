@@ -10,7 +10,7 @@ from assentio.apps.blog.slots import PortletSlot
 from flask.ext.admin.contrib.fileadmin import FileAdmin
 
 from views import (MyIndexView, UnaccessibleModelView, PostModelView,
-                   PageModelView, SocialButtonView, PortletView, PortletSlotView)
+                   PageModelView, SocialButtonView, PortletView)
 
 
 class AdminApp(object):
@@ -43,7 +43,7 @@ class AdminApp(object):
         admin.add_view(PostModelView(Post, db.session, category='Blog'))
 
         # adding PortletSlot
-        admin.add_view(PortletSlotView(PortletSlot, db.session,
+        admin.add_view(UnaccessibleModelView(PortletSlot, db.session,
                                                     category="Portlets"))
 
         # adding TextPortlet
