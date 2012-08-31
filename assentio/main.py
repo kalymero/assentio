@@ -60,8 +60,8 @@ def create_flask_app(config_file=None, config_object=None, **kwargs):
         app.config.from_pyfile(config_file)
 
     # then override configuration from envvar
-    if 'FLASK_BLOG_SETTINGS' in os.environ:
-        app.config.from_envvar('FLASK_BLOG_SETTINGS')
+    if 'ASSENTIO_SETTINGS' in os.environ:
+        app.config.from_envvar('ASSENTIO_SETTINGS')
 
     if app.debug and not app.config.get('TESTING', None):
         app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False

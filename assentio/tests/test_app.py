@@ -54,12 +54,12 @@ class AssentioComponentTestCase(base.BaseTestCase):
         self.assertIn('CONFIG_TEST_VAR_FILE', app.config)
 
         # Check the configuration via environment variable
-        os.environ['FLASK_BLOG_SETTINGS'] = cfg_file_name
+        os.environ['ASSENTIO_SETTINGS'] = cfg_file_name
         app = create_flask_app()
         self.assertIn('CONFIG_TEST_VAR_FILE', app.config)
 
         # Removing the property from the global environment
-        os.environ.pop('FLASK_BLOG_SETTINGS')
+        os.environ.pop('ASSENTIO_SETTINGS')
 
         # We need to manually unlink the tmp file (delete=False)
         os.unlink(cfg_file_name)
