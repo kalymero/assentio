@@ -20,12 +20,25 @@
 <span class="badge badge-info pull-right hidden-phone">{{ type }}</span>
 {% endmacro %}
 
+<!-- The page post -->
+{% macro page_post(post) %}
+<article id="post-{{post.id}}">
+    {% if post.image %}
+        <img class="hidden-phone" src="{{ post.image }}" />
+    {% endif %}
+    <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
+    <p class="post-description"><strong>{{ post.description }}</strong></p>
+    {{post.body|safe}}
+    {{ post_footer_metadata() }}
+</article>
+{% endmacro %}
+
 <!-- The standard post -->
 {% macro standard_post(post, full=False) %}
 <article id="post-{{post.id}}">
     {{ post_badge('post') }}
     {% if post.image %}
-    <img class="hidden-phone" src="{{ post.image }}" />
+        <img class="hidden-phone" src="{{ post.image }}" />
     {% endif %}
     <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
     {{ post_header_metadata(post.id, post.date, post.state) }}

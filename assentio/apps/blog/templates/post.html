@@ -2,8 +2,12 @@
 {% extends "base.html" %}
 {% block content -%}
     <div id="post-id" data-id={{post.id}}> </div> 
-    {% if post.type == 'standard' or post.type == 'page' %}
+
+    {% if post.type == 'standard' %} 
         {{ macros.standard_post(post, full=True) }}
+
+    {% elif post.type == 'page' %}
+        {{ macros.page_post(post) }}
 
     {% elif post.type == 'quote' %}
         {{ macros.quote_post(post) }}
