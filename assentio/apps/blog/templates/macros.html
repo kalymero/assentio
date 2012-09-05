@@ -28,8 +28,8 @@
     {% endif %}
     <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
     <p class="post-description"><strong>{{ post.description }}</strong></p>
-    {{post.body|safe}}
-    {{ post_footer_metadata() }}
+    {{ post.body|safe }}
+    <br />
 </article>
 {% endmacro %}
 
@@ -44,10 +44,10 @@
     {{ post_header_metadata(post.id, post.date, post.state) }}
     <p class="post-description"><strong>{{ post.description }}</strong></p>
     {% if full %}
-        {{post.body|safe}}
+        {{ post.body|safe }}
     {% else %}
         {% if post.showfull %}
-            <div class="hidden-phone">{{post.body|safe}}</div>
+            <div class="hidden-phone">{{ post.body|safe }}</div>
         {% else %}
             <a href="{{ url_for('blog.post', post_id=post.id) }}">Continue reading &rarr;</a>
         {% endif%}
