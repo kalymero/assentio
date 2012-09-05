@@ -65,7 +65,7 @@ class BlogApp(object):
         """
         self.app.extensions['blog_portlets'].add(portletclass.type)
 
-    def _get_posts(self, types=[], unrestricted=False):
+    def _get_posts(self, types=[], unrestricted=False, ordered=False):
         """Wrapped method which simply return posts
         :param types: if [] return all types post else returns only the
                       specified ones
@@ -84,14 +84,18 @@ class BlogApp(object):
         if search_args:
             posts = posts.filter_by(**search_args)
 
+        if ordered:
+            posts = posts.order_by(Post.date.desc())
+
         return posts
 
-    def get_all_posts(self, unrestricted=False):
+    def get_all_posts(self, unrestricted=False, ordered=False):
         "Return all the post visibile by the user"
         # Remove only the static type from all the available types
         filter_types = post_types.keys()
         filter_types.remove('page')
-        return self._get_posts(types=filter_types, unrestricted=unrestricted)
+        return self._get_posts(types=filter_types, unrestricted=unrestricted,
+                                                        ordered=ordered)
 
     def get_pages(self, unrestricted=False, ordered=False):
         "Return the pages"
@@ -159,9 +163,10 @@ class BlogApp(object):
             arguments['post'] = post
         else:
             if page:
-                arguments['posts'] = self.get_all_posts().paginate(page, 4)
+                arguments['posts'] =\
+                            self.get_all_posts(ordered=True).paginate(page, 4)
             else:
-                arguments['posts'] = self.get_all_posts()
+                arguments['posts'] = self.get_all_posts(ordered=True)
 
         arguments['pages'] = self.get_pages(ordered=True)
         arguments['social_buttons'] = self.get_social_buttons(ordered=True)

@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timedelta
 
 from werkzeug.urls import url_fix
 from sqlalchemy.exc import IntegrityError
@@ -33,7 +34,6 @@ class BlogComponentTestCase(base.BaseTestCase):
         # and a type (default = standard)
         self.assertTrue(post.type)
         self.assertEqual(post.type, 'standard')
-
 
         # Check it has a shortname and it's in lowercase
         self.assertTrue(post.shortname)
@@ -97,7 +97,6 @@ class BlogComponentTestCase(base.BaseTestCase):
         self.assertEqual(res.status_code, 404)
     
 
-
     def test_all_post_visibility(self):
         "Test the user visibily restrictions of the all posts method"
         
@@ -135,6 +134,24 @@ class BlogComponentTestCase(base.BaseTestCase):
         # and we'll shown all the posts
         posts = blog_app.get_all_posts() 
         self.assertEqual(posts.count(), 3)
+
+        # change the date and check for posts order
+        
+        post_1 = Post.query.filter_by(title='post_1').first()
+        post_2 = Post.query.filter_by(title='post_2').first()
+
+        post_1.date = datetime.now() 
+        post_2.date = datetime.now() + timedelta(hours=1)
+
+        self.assertTrue(post_2.date > post_1.date)
+
+        post_1.save(self.app)
+        post_2.save(self.app)
+
+        posts = blog_app.get_all_posts(ordered=True) 
+
+        self.assertEqual(posts[0].title, 'post_2')
+        self.assertEqual(posts[1].title, 'post_1')
 
         # Now we create a page, it should not be visibile in all_posts
         # view so the posts must be 3
