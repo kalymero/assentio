@@ -20,7 +20,9 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <span class="brand">{{ admin_view.admin.name }}</span>
+            <a href="/">
+                <span class="brand">{{ admin_view.admin.name }}</span>
+            </a>
           <ul class="nav">
             {% for item in admin_view.admin.menu() %}
               {% if item.is_category() %}
