@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from wtforms import fields as f, widgets as w
 
 from wtforms.ext.sqlalchemy.orm import converts
@@ -41,7 +39,6 @@ class UnaccessibleModelView(ModelView):
 class PostModelView(UnaccessibleModelView):
     form_overrides = dict(state=f.SelectField, type=f.SelectField)
     form_args = dict(body=dict(widget=RichTextArea()),
-                     date=dict(default=datetime.now()),
                      state=dict(choices=states.items(), default='private'),
                      stored_shortname=dict(label='Shortname'),
                      type=dict(choices=post_types.items(),

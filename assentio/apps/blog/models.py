@@ -26,7 +26,7 @@ class Post(DBMixin, db.Model):
     body = db.Column(db.Text, nullable=False)
     showfull = db.Column(db.Boolean)
     image = db.Column(db.String)
-    date = db.Column(db.DateTime, default=datetime.now())
+    date = db.Column(db.DateTime)
     type = db.Column(db.String(15), nullable=False, default='standard')
     state = db.Column(db.String(10), nullable=False, default='private')
     _author = db.Column(db.String(16))
@@ -50,6 +50,7 @@ class Post(DBMixin, db.Model):
         # the shortname validator, then, will normalize it
         self.stored_shortname = self.stored_shortname or value
         self._author = self._author or current_user.username
+        self.date = self.date or datetime.now()
         return value
 
     @validates('stored_shortname')
@@ -65,6 +66,11 @@ class Post(DBMixin, db.Model):
     def validate_type(self, key, value):
         assert value in post_types.keys()
         return value
+
+    @validates('date')
+    def validate_date(self, key, value):
+        "Prevent the null date override from the form"
+        return value or self.date
 
     @hybrid_property
     def shortname(self):

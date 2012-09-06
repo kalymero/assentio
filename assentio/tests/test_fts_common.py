@@ -208,13 +208,13 @@ class AssentioFunctionalTestCase(base.BaseTestCase):
         self.create_post('post-4', 'Post-4')
         self.create_post('post-5', 'Post-5')
 
-        # Go to the home, post-5 must be not present
+        # Go to the home, post-1 (older) must be not present
         res = self.client.get('/')
-        self.assertNotIn('post-5', res.data)
+        self.assertNotIn('post-1', res.data)
 
         # But it must be present in page 2
         res = self.client.get('/?page=2')
-        self.assertIn('post-5', res.data)
+        self.assertIn('post-1', res.data)
 
         # What happen if we redirect to a non existent page?
         res = self.client.get('/?page=3')
