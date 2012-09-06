@@ -23,10 +23,6 @@
 <!-- The page post -->
 {% macro page_post(post) %}
 <article id="post-{{post.id}}">
-    {% if post.image %}
-        <img class="hidden-phone" src="{{ post.image }}" />
-    {% endif %}
-    <h3><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h3>
     <p class="post-description"><strong>{{ post.description }}</strong></p>
     {{ post.body|safe }}
     <br />
