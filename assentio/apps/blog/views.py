@@ -51,7 +51,7 @@ def rss():
         items.append(rss)
 
     feed = RSS2(title='Progress in Development',
-                link=url_for('blog.rss'),
+                link=urljoin(host, url_for('blog.rss')),
                 description='Antonio Sagliocco personal blog',
                 lastBuildDate=datetime.datetime.now(),
                 items=items)
