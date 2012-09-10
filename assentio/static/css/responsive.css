@@ -2,7 +2,11 @@
 
 article {
     margin: 20px 20px 0 20px;
+}
 
+.bottom-nav-collapse{
+    overflow: hidden;
+    height: 0px;
 }
 
 }
