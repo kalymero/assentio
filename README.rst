@@ -1,4 +1,5 @@
-.. contents::
+.. image:: https://secure.travis-ci.org/kalymero/assentio.png 
+   :target: http://travis-ci.org/#!/kalymero/assentio
 
 Introduction
 ============
@@ -27,3 +28,4 @@ You can found the buildout package and some install instructions here: http://gi
 Feel free to contact me for any question.
 
 Enjoy!
+
