@@ -41,6 +41,7 @@ setup(name='assentio',
           'Flask-bcrypt',
           'Flask-DebugToolbar',
           'Flask-Script', 
+          'PyRSS2Gen',
       ],
       entry_points={
           'console_scripts': ['runserver = assentio.main:runserver',
