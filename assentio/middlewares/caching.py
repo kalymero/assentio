@@ -17,7 +17,8 @@ class SimpleCachingMiddleware(object):
 
         def _start_response(status, response_headers, exc_info=None):
             # Logout view must be not cached or it will not work
-            not_caching_urls = (url_for('auth.logout_view'), )
+            not_caching_urls = (url_for('auth.logout_view'), 
+                                url_for('blog.rss'))
 
             if not current_user.is_authenticated() and request.path not in \
                                                             not_caching_urls:
