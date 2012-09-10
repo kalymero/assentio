@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, render_template, url_for, redirect, current_app
+from flask import Blueprint
 from flask.ext.login import current_user
 
 from .models import Post, Page, SocialButton, post_types
@@ -9,29 +9,6 @@ from .portlets import TextPortlet
 
 template_folder = os.path.join(os.path.split(__file__)[0], 'templates')
 blog_bp = Blueprint('blog', __name__, template_folder=template_folder)
-
-
-@blog_bp.route("/post/<int:post_id>")
-@blog_bp.route("/post/<shortname>")
-def post(post_id=None, shortname=None):
-    blog_app = current_app.extensions['blog']
-
-    search_index = 'shortname' if shortname else 'id'
-    search_value = shortname or post_id
-
-    search_args = {search_index: search_value}
-
-    # If anonymous user search only for published posts
-    if not current_user.is_authenticated():
-        search_args['state'] = 'public'
-
-    post = Post.query.filter_by(**search_args).first_or_404()
-
-    if search_index == 'id':
-        return redirect(url_for('.post', shortname=post.shortname))
-    else:
-        arguments = blog_app.get_all_page_components(post=post)
-        return render_template("post.html", **arguments)
 
 
 class BlogApp(object):

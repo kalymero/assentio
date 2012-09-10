@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from assentio.tests import base
 from assentio.tests.base import TESTUSER
 from assentio.manage import _syncdb as syncdb 
-from assentio.apps.blog import Post, Page, SocialButton
+from assentio.apps.blog import Post, Page, SocialButton, views
 from assentio.apps.blog.base import BasePortlet
 from assentio.apps.blog.slots import PortletSlot
 
@@ -366,6 +366,31 @@ class BlogComponentTestCase(base.BaseTestCase):
         self.assertEqual(portlets[1].title, 'My Portlet')
 
         ctx.pop()
+
+    def test_rss(self):
+        "Check the RSS feed is working"
+
+        # Login as admin
+        ctx = self._fake_user_context(as_admin=True)
+        self.create_post('post_1','page_post_body', state='private')
+        self.create_post('post_2','page_post_body', state='public')
+        self.create_post('post_3','page_post_body', state='public')
+        self.create_post('post_4','page_post_body', state='public')
+        ctx.pop()
+    
+        # Get the feed
+        res = self.client.get('/feed')
+        self.assertEqual(res.status_code, 200)
+
+        # Ensure the mimetype is correct
+        self.assertEqual(res.mimetype, 'application/rss+xml' )
+
+        # Ensure post_1 is not in the response (it's private)
+        self.assertNotIn('http://localhost/post/1', res.data)
+
+        # Ensure there's the full url in the link
+        self.assertIn('http://localhost/post/2', res.data)
+
         
 def test_suite():
     tests_classes = [

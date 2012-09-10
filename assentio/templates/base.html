@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-combined.min.css" />
         <link rel="stylesheet" href=" {{ url_for('static', filename='css/style.css') }}  " />
         <link rel="stylesheet" href=" {{ url_for('static', filename='css/responsive.css') }}  " />
+        <link rel="alternate" type="application/rss+xml" title="Progress in Development Feed" href="{{url_for('blog.rss')}}" />
     </head>
     <body>
         <a class="hidden-phone" href="http://github.com/kalymero/assentio"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>

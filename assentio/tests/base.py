@@ -93,7 +93,7 @@ class BaseTestCase(unittest.TestCase):
            ctx.push()
            return ctx
 
-    def create_post(self, title, body, shortname='', type=''):
+    def create_post(self, title, body, shortname='', type='', state=''):
         """Create a post"""
         # We must be logged-in to create a post
         ctx = self._fake_user_context(as_admin = True)
@@ -105,6 +105,9 @@ class BaseTestCase(unittest.TestCase):
 
         if type:
             tmp_post.type = type
+
+        if state:
+            tmp_post.state = state
 
         # Reset the title in order to raise the title validator
         # which is responsible to set the shortname
