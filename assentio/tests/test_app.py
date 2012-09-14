@@ -14,7 +14,8 @@ class AssentioComponentTestCase(base.BaseTestCase):
     def test_cache_middeware(self):
         "Test the cache middleware is in place"
         res = self.client.get('/')
-        self.assertIn("Cache-Control", res.headers)
+        self.assertIn('Cache-Control', res.headers)
+        self.assertIn('Expires', res.headers)
 
     def test_sqlalchemy(self):
         "Test sqlalchemy is correctly instantiated"
